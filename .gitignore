@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# FastF1 cache
+data/cache/
+
+# External raw datasets
+data/raw/openf1/
+
+# API cache
+data/cache/
+
+# OpenF1 raw datasets
+/data/raw/openf1/
+
+# Processed datasets
+/data/processed/*
+
+# FastF1 / API cache
+/data/cache/
