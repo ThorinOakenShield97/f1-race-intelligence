@@ -12,6 +12,38 @@ def count_stints_by_compound(stints: pd.DataFrame) -> pd.Series:
 
 def count_stints_by_driver_and_compound(stints: pd.DataFrame) -> pd.DataFrame:
 
-    driver_stints = pd.crosstab(stints["driver_number"], stints["compound"])
+    drivers = pd.crosstab(stints["driver_number"], stints["compound"])
 
-    return driver_stints
+    return drivers
+
+def add_team_to_stints(stints: pd.DataFrame,drivers: pd.DataFrame) -> pd.DataFrame:
+
+    teams = stints.merge(drivers, on = "driver_number", how = "left")
+    
+    return teams
+
+
+def count_stints_by_team_and_compound(stints: pd.DataFrame) -> pd.DataFrame:
+
+    teams_compound = pd.crosstab(stints["team_name"], stints["compound"])
+
+    return teams_compound
+
+def calculate_stint_length(stints: pd.DataFrame) -> pd.DataFrame:
+
+    stints_copy = stints.copy()
+
+    start = stints_copy["lap_start"]
+    end = stints_copy["lap_end"]
+
+    stints_copy["stint_length"] = end-start + 1
+
+    
+    return stints_copy
+
+
+def calculate_team_test_laps(stints: pd.DataFrame) -> pd.Series:
+
+    test_laps = stints.groupby("team_name")["stint_length"].sum()
+    return test_laps
+
